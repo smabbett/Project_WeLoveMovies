@@ -10,12 +10,9 @@ const reduceMovies = reduceProperties('theater_id', {
   image_url: ['movies', null, 'image_url'],
   created_at: ['movies', null, 'created_at'],
   updated_at: ['movies', null, 'updated_at'],
-  // is_showing: ['movies_theaters', null, 'is_showing'],
-  // theater_id: ['movies_theaters', null, 'theater_id'],
 });
 
-//Need to add is_showing and theater_id?
-function list(req, res, next) {
+function list() {
   return knex('theaters as t')
     .join('movies_theaters as mt', 't.theater_id', 'mt.theater_id')
     .join('movies as m', 'm.movie_id', 'mt.movie_id')

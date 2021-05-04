@@ -1,9 +1,9 @@
-const request = require("supertest");
+const request = require('supertest');
 
-const app = require("../../src/app");
-const db = require("../../src/db/connection");
+const app = require('../../src/app');
+const db = require('../../src/db/connection');
 
-describe("Review Routes", () => {
+describe('Review Routes', () => {
   beforeAll(() => {
     return db.migrate
       .forceFreeMigrationsLock()
@@ -19,17 +19,17 @@ describe("Review Routes", () => {
     return await db.migrate.rollback(null, true).then(() => db.destroy());
   });
 
-  describe("PUT /reviews/:reviewId", () => {
-    test("should return a 404 if the ID given does not match any ID in the database", async () => {
-      const response = await request(app).put("/reviews/999999999", {});
+  describe('PUT /reviews/:reviewId', () => {
+    test('should return a 404 if the ID given does not match any ID in the database', async () => {
+      const response = await request(app).put('/reviews/999999999', {});
 
       expect(response.body.error).toMatch(/cannot be found/i);
       expect(response.statusCode).toBe(404);
     });
 
-    test("updates an existing review, returning the updated review including the critic info", async () => {
-      const data = { content: "Content" };
-      const previous = await db("reviews").first();
+    test('updates an existing review, returning the updated review including the critic info', async () => {
+      const data = { score: 4 };
+      const previous = await db('reviews').first();
 
       const response = await request(app)
         .put(`/reviews/${previous.review_id}`)
@@ -39,7 +39,7 @@ describe("Review Routes", () => {
       expect(response.body.data).toEqual(
         expect.objectContaining({
           ...previous,
-          content: "Content",
+          score: 4,
           created_at: expect.any(String),
           updated_at: expect.any(String),
           critic: expect.objectContaining({
@@ -50,23 +50,23 @@ describe("Review Routes", () => {
         })
       );
 
-      const updatedReview = await db("reviews")
+      const updatedReview = await db('reviews')
         .where({ review_id: previous.review_id })
         .first();
 
-      expect(updatedReview.content).toBe("Content");
+      expect(updatedReview.score).toBe(4);
     });
   });
 
-  describe("DELETE /reviews/:reviewId", () => {
-    test("should return a 404 if the ID given does not match any ID in the database", async () => {
-      const response = await request(app).delete("/reviews/9999", {});
+  describe('DELETE /reviews/:reviewId', () => {
+    test('should return a 404 if the ID given does not match any ID in the database', async () => {
+      const response = await request(app).delete('/reviews/9999', {});
       expect(response.body.error).toBeDefined();
       expect(response.statusCode).toBe(404);
     });
 
-    test("should delete the review record when given an existing review_id", async () => {
-      const previous = await db("reviews").first();
+    test('should delete the review record when given an existing review_id', async () => {
+      const previous = await db('reviews').first();
 
       const response = await request(app).delete(
         `/reviews/${previous.review_id}`
@@ -75,7 +75,7 @@ describe("Review Routes", () => {
       expect(response.body.error).toBeUndefined();
       expect(response.statusCode).toBe(204);
 
-      const deletedReview = await db("reviews")
+      const deletedReview = await db('reviews')
         .where({
           review_id: previous.review_id,
         })

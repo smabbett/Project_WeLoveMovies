@@ -7,6 +7,5 @@ router
   .put(controller.update)
   .delete(controller.destroy)
   .all(methodNotAllowed);
-//router.route('/').get(controller.list).all(methodNotAllowed);
 
 module.exports = router;

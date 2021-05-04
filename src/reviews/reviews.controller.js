@@ -20,7 +20,7 @@ function hasOnlyValidProperties(req, res, next) {
   next();
 }
 //only score is required??
-const hasRequiredProperties = hasProperties('content');
+const hasRequiredProperties = hasProperties('score');
 
 async function reviewExists(req, res, next) {
   const review = await service.read(req.params.reviewId);

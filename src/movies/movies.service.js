@@ -10,8 +10,8 @@ function listNowPlaying() {
     .join('movies_theaters as mt', 'm.movie_id', 'mt.movie_id')
     .distinct('m.*')
     .where({ 'mt.is_showing': true });
-  // .distinctOn('movie_id');
 }
+
 function listReviews(movieId) {
   return knex('reviews as r')
     .join('critics as c', 'r.critic_id', 'c.critic_id')
