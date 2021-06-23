@@ -29,6 +29,10 @@ This project was designed to test my ability to build complex servers and access
 - PostgreSQL
 - CORS
 
+## Deployment
+
+- [We Love Movies App](https://we-love-movies-client-one.vercel.app/)
+
 ## Screenshots
 
 ![Screenshot](./images/all_movies.png)
